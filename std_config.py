@@ -11,7 +11,7 @@ SQUARE_WIDTH = 64
 BOARD_COLOR_DARK = 'cornflower blue'
 BOARD_COLOR_LIGHT = 'khaki'
 
-TIME_LIMIT = 60*60   # (Seconds.) Total time to move for each player.
+TIME_LIMIT = 600     # (Seconds.) Total time to move for each player.
 MAX_MOVES = 100      # Maximum number of moves per player before forced draw.
 
 ORTHOGONAL_DIRS = tuple(
