@@ -52,7 +52,7 @@ class Board(UserDict):
         moves = []
         for loc, piece in self.items():
             if piece.color == color:
-                piece_moves = piece._moves_available(loc)
+                piece_moves = piece._moves_available(loc, self)
                 for curr_loc, new_loc in piece_moves:
                     try:
                         self._assert_legal_move(curr_loc, new_loc)
@@ -67,7 +67,7 @@ class Board(UserDict):
         that; see above.)
         This method raises an exception if you attempt to move illegally.'''
         self._assert_legal_move(orig_loc, loc)
-        self[orig_loc]._move_yourself(orig_loc, loc)
+        self[orig_loc]._move_yourself(orig_loc, loc, self)
         self.moves.append((orig_loc, loc))
         self.times.append(time)
 
@@ -110,7 +110,7 @@ class Board(UserDict):
         moves = []
         for loc, piece in self.items():
             if piece.color == color:
-                moves.extend(piece._moves_available(loc))
+                moves.extend(piece._moves_available(loc, self))
         return moves
 
     def _no_way_out_of_check(self, color):
@@ -132,7 +132,7 @@ class Board(UserDict):
             # square. Throw an exception so this isn't registered as a move
             # in the game, but don't give it any message to display.
             raise IllegalMoveException('')
-        if loc in [ l for _,l in piece._moves_available(orig_loc) ]:
+        if loc in [ l for _,l in piece._moves_available(orig_loc, self) ]:
             modified_model = deepcopy(self)
             modified_model[loc] = modified_model.pop(orig_loc)
             if modified_model.is_king_in_check(piece.color):

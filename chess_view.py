@@ -404,7 +404,7 @@ class View():
     def show_hints_for(self, piece, loc):
         if piece:
             for m in [ 
-                l for _,l in piece._moves_available(loc) ]:
+                l for _,l in piece._moves_available(loc, self.game.board) ]:
                 try:
                     self.game.board._assert_legal_move(loc, m)
                     center = self.calculate_piece_coords(m)
